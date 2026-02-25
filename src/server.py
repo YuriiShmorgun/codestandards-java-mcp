@@ -19,11 +19,14 @@ def get_java_rules(
     categories: list[str] = None,
     tags: list[str] = None
 ) -> dict:
-    """Get Java coding standards rules filtered by categories and/or tags.
+    """Get Java coding standards rules filtered by categories and/or tags (OR logic).
+
+    When both parameters are provided, rules matching EITHER categories OR tags are returned.
+    Omit both to get all rules.
 
     Args:
-        categories: List of categories to filter by (e.g., ["Variables", "DTO"]). Pass empty or omit to get all.
-        tags: List of tags to filter by (e.g., ["naming", "lombok"]). Pass empty or omit to get all.
+        categories: List of categories to filter by (e.g., ["Variables", "DTO"]).
+        tags: List of tags to filter by (e.g., ["naming", "lombok"]).
 
     Returns:
         List of rules with examples.

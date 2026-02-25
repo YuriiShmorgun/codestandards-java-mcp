@@ -7,40 +7,11 @@ from src.rules import get_all_tags
 from src.rules import get_rule_by_id
 from src.rules import get_rules_by_tag
 from src.rules import get_rules_filtered
-from src.validators import AnalyzeJavaCodeRequest
 from src.validators import GetJavaRulesRequest
 from src.validators import GetRuleDetailsRequest
 from src.validators import format_validation_error
 
 mcp = FastMCP("java-code-standards")
-
-
-@mcp.tool()
-def analyze_java_code(code: str) -> dict:
-    """Analyze Java code for violations of coding standards using SonarQube integration.
-
-    Args:
-        code: Java source code to analyze.
-
-    Returns:
-        Analysis result with violations found.
-    """
-    try:
-        AnalyzeJavaCodeRequest(code=code)
-    except ValidationError as e:
-        return format_validation_error(e)
-
-    return {
-        "status": "in_development",
-        "message": "SonarQube integration is under development",
-        "planned_features": [
-            "Integration with SonarQube API",
-            "Code quality analysis",
-            "Security vulnerability detection",
-            "Code smell detection",
-            "Technical debt calculation"
-        ]
-    }
 
 
 @mcp.tool()

@@ -100,27 +100,6 @@ class GetRuleDetailsRequest(BaseModel):
         return validated
 
 
-class AnalyzeJavaCodeRequest(BaseModel):
-    """Request model for analyze_java_code tool."""
-
-    code: str = Field(
-        ...,
-        min_length=1,
-        description="Java source code to analyze"
-    )
-
-    @field_validator("code")
-    @classmethod
-    def validate_code(cls, value: str) -> str:
-        if not value.strip():
-            raise ValueError("Code cannot be empty or whitespace only")
-
-        if len(value) > 100000:
-            raise ValueError(f"Code too large: {len(value)} chars (max 100000)")
-
-        return value
-
-
 def format_validation_error(error: Exception) -> dict:
     """Format Pydantic validation error to response dict."""
     if hasattr(error, "errors"):

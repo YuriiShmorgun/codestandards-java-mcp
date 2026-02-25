@@ -31,17 +31,20 @@ def get_rules_filtered(
     categories: Optional[List[str]] = None,
     tags: Optional[List[str]] = None
 ) -> List[Rule]:
-    rules = JAVA_RULES
+    if not categories and not tags:
+        return JAVA_RULES
+
+    matched_ids: set = set()
 
     if categories:
-        categories_lower = [c.lower() for c in categories]
-        rules = [r for r in rules if r.category.lower() in categories_lower]
+        categories_lower = {c.lower() for c in categories}
+        matched_ids |= {r.id for r in JAVA_RULES if r.category.lower() in categories_lower}
 
     if tags:
-        tags_lower = [t.lower() for t in tags]
-        rules = [r for r in rules if any(t.lower() in tags_lower for t in r.tags)]
+        tags_lower = {t.lower() for t in tags}
+        matched_ids |= {r.id for r in JAVA_RULES if any(t.lower() in tags_lower for t in r.tags)}
 
-    return rules
+    return [r for r in JAVA_RULES if r.id in matched_ids]
 
 
 def get_all_categories() -> List[str]:
